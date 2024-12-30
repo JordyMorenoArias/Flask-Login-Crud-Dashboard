@@ -1,5 +1,3 @@
-# Flask-Login-Crud-Dashboard
-
 # Flask CRUD Dashboard
 
 Este es un proyecto desarrollado con Python utilizando el framework Flask. La aplicación incluye las siguientes características:
