@@ -19,9 +19,10 @@ Este es un proyecto desarrollado con Python utilizando el framework Flask. La ap
    git clone https://github.com/JordyMorenoArias/Flask-Login-Crud-Dashboard
    ```
 2. Crea un entorno virtual:
+   ```bash
      python -m venv env
-
-3. Activa el entorno virtual:
+   ```
+4. Activa el entorno virtual:
     En Windows:
       ```bash
       env\Scripts\activate
