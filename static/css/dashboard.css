@@ -42,17 +42,28 @@ body {
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 0 15px;
     align-items: center;
     margin-bottom: 30px;
+}
+
+@media (min-width: 1024px)
+{
+    .header{
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .search {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    width: 300px;
+    min-width: 400px;
+    height: 40px;
+    font-size: 15px;
 }
 
 .add-task {
@@ -62,6 +73,7 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    height: 40px;
 }
 
 .task-grid {
@@ -105,7 +117,7 @@ body {
 }
 
 .task-description{
-    margin: 1 0px 0;
+    margin: 8px 0px;
     text-align: justify;
     font-size: 14px;
 }
