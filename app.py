@@ -20,6 +20,9 @@ def Login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+
+        if not email or not password:
+            return render_template('login.html', error="Los campos no pueden estar vacíos")
         
         with pymysql.connect(host="localhost", user="root", password="", database="loginpython", port=3306) as connection:
             with connection.cursor() as cursor:
