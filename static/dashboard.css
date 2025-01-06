@@ -2,89 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    background: #f0f2f5;
 }
 
-.login-container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
-}
-
-.login-container h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #666;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.btn-login {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn-login:hover {
-    background-color: #0056b3;
-}
-
-.registro {
-    text-align: center;
-    margin-top: 15px;
-}
-
-.registro a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.Home-container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    max-width: 400px;
-    width: 60%;
-}
-
-.error {
-    color: red;
-    margin: 10px 0 15px 0;
-    text-align: center;
-}
-/* 
 .dashboard {
     display: grid;
     grid-template-columns: 250px 1fr;
@@ -128,7 +52,7 @@ body {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    min-width: 300px;
+    width: 300px;
 }
 
 .add-task {
@@ -141,9 +65,16 @@ body {
 }
 
 .task-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+}
+
+@media (min-width: 1024px)
+{
+    .task-grid{
+        flex-direction: row;
+    }
 }
 
 .task-column {
@@ -151,6 +82,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    min-width: 32%;
 }
 
 .column-header {
@@ -170,6 +102,12 @@ body {
 .task-title {
     font-weight: bold;
     margin-bottom: 5px;
+}
+
+.task-description{
+    margin: 1 0px 0;
+    text-align: justify;
+    font-size: 14px;
 }
 
 .task-date {
@@ -198,4 +136,4 @@ body {
 .low {
     background: #00b894;
     color: white;
-} */
+}

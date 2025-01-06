@@ -37,11 +37,11 @@ def Login():
     
     return render_template('login.html')
 
-@app.route('/home')
+@app.route('/dashboard')
 def home():
     if 'IdUser' in session:
         IdUser = session['IdUser']
-        return render_template('home.html', IdUser=IdUser)
+        return render_template('dashboard.html', IdUser=IdUser)
     else:
         return redirect(url_for('Login'))
     
