@@ -152,7 +152,7 @@ body {
     color: white;
 }
 
-.div-create-task {
+.create-Task-Container {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     height: 100%;
@@ -161,7 +161,6 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 100;
-    visibility: hidden;
 }
 
 .create-task {

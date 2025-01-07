@@ -3,12 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="../static/css/dashboard.css">
 </head>
 
 <body>
     <div class="dashboard">
+        <!-- Sidebar -->
         <div class="sidebar">
             <h1>TaskMaster</h1>
             <div class="menu-item">Dashboard</div>
@@ -18,29 +20,31 @@
             <div class="menu-item">Equipos</div>
             <div class="menu-item">Configuración</div>
         </div>
+
+        <!-- Main Content -->
         <div class="main-content">
             <div class="header">
                 <input type="text" class="search" placeholder="Buscar tareas...">
-                <button class="add-task" onclick="ShowHideCreateTask">+ Nueva Tarea</button>
+                <button class="add-task" onclick="ShowHideCreateTask()">+ Nueva Tarea</button>
             </div>
-
             <div class="task-grid">
-                
+                <!-- Contenido dinámico de tareas -->
             </div>
         </div>
 
-        <div class="div-create-task">
-            <div class="create-task" ">
+        <!-- Create Task Modal -->
+        <div class="create-Task-Container" style="visibility: hidden;" onclick="HideOnBackgroundClick(event)">
+            <div class="create-task">
                 <div class="task-header">
                     <h2>Crear Nueva Tarea</h2>
                 </div>
                 <div class="task-body">
                     <input type="text" class="task-title txt-task" placeholder="Título de la tarea">
                     <select class="task-category txt-task">
-                        <option value="low">Personal</option>
-                        <option value="medium">Estudios</option>
-                        <option value="high">Trabajo</option>
-                        <option value="high">Otro</option>
+                        <option value="personal">Personal</option>
+                        <option value="estudios">Estudios</option>
+                        <option value="trabajo">Trabajo</option>
+                        <option value="otro">Otro</option>
                     </select>
                     <textarea class="task-description txt-task" placeholder="Descripción de la tarea"></textarea>
                     <input type="date" class="task-date txt-task">
@@ -54,10 +58,9 @@
                     <button class="save-task">Guardar</button>
                 </div>
             </div>
-
         </div>
-
-        <script src="../static/js/dashboard.js"></script>
+    </div>
+    <script src="../static/js/dashboard.js"></script>
 </body>
 
 </html>
