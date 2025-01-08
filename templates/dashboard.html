@@ -28,7 +28,45 @@
                 <button class="add-task" onclick="ShowHideCreateTask()">+ Nueva Tarea</button>
             </div>
             <div class="task-grid">
-                <!-- Contenido dinámico de tareas -->
+                <div class="task-column">
+                    <div class="column-header">Por Hacer</div>
+                    <div class="task-card">
+                        <div class="task-title">Diseñar nueva interfaz</div>
+                        <div class="task-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. In illo
+                            ex excepturi, ullam</div>
+                        <div class="task-date">Vence: 15 Enero</div>
+                        <span class="task-priority high">Alta</span>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-title">Actualizar documentación</div>
+                        <div class="task-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. In illo
+                            ex excepturi, ullam</div>
+                        <div class="task-date">Vence: 20 Enero</div>
+                        <span class="task-priority low">Baja</span>
+                    </div>
+                </div>
+
+                <div class="task-column">
+                    <div class="column-header">En Progreso</div>
+                    <div class="task-card">
+                        <div class="task-title">Desarrollo backend</div>
+                        <div class="task-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. In illo
+                            ex excepturi, ullam</div>
+                        <div class="task-date">Vence: 18 Enero</div>
+                        <span class="task-priority medium">Media</span>
+                    </div>
+                </div>
+
+                <div class="task-column">
+                    <div class="column-header">Completado</div>
+                    <div class="task-card">
+                        <div class="task-title">Reunión de equipo</div>
+                        <div class="task-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. In illo
+                            ex excepturi, ullam</div>
+                        <div class="task-date">Completado: 5 Enero</div>
+                        <span class="task-priority low">Baja</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -39,19 +77,19 @@
                     <h2>Crear Nueva Tarea</h2>
                 </div>
                 <div class="task-body">
-                    <input type="text" class="task-title txt-task" placeholder="Título de la tarea">
-                    <select class="task-category txt-task">
-                        <option value="personal">Personal</option>
-                        <option value="estudios">Estudios</option>
-                        <option value="trabajo">Trabajo</option>
-                        <option value="otro">Otro</option>
+                    <input class="txt-task-title txt-task" type="text" placeholder="Título de la tarea">
+                    <select class="txt-task-category txt-task">
+                        <option value="Personal">Personal</option>
+                        <option value="Estudios">Estudios</option>
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Otro">Otro</option>
                     </select>
-                    <textarea class="task-description txt-task" placeholder="Descripción de la tarea"></textarea>
-                    <input type="date" class="task-date txt-task">
-                    <select class="task-priority txt-task">
-                        <option value="low">Baja</option>
-                        <option value="medium">Media</option>
-                        <option value="high">Alta</option>
+                    <textarea class="txt-task-description txt-task" placeholder="Descripción de la tarea"></textarea>
+                    <input class="txt-task-date txt-task" type="date">
+                    <select class="txt-task-priority txt-task">
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
                     </select>
                 </div>
                 <div class="task-footer">
