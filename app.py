@@ -10,51 +10,30 @@ app.secret_key = b'\x97\xa6\xe3?Bm\xdcL!I=\x08\xe96\x18\xd6q\x9bq\x83\xce8\xbd&'
 def HashearPassword(password):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
-def InsertarUsuario():
-    connection = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="taskmanager",
-        port=3306,
-    )
+# def CreateUser():
+#     connection = pymysql.connect(
+#         host="localhost",
+#         user="root",
+#         password="",
+#         database="taskmanager",
+#         port=3306,
+#     )
     
-    cursor = connection.cursor()
+#     cursor = connection.cursor()
     
-    cursor.execute(
-        """
-        INSERT INTO Users (name, email, password_hash, create_date)
-        VALUES (%s, %s, %s, %s)
-        """,
-        (
-            "Jordy Moreno Arias",
-            "yordimorenoarias.11@gmail.com",
-            HashearPassword("2001892z"),
-            date.today()
-        )
-    )
+#     cursor.execute(
+#         """
+#         INSERT INTO Users (name, email, password_hash, create_date)
+#         VALUES (%s, %s, %s, %s)
+#         """,
+#         (
+            
+#         )
+#     )
 
-    connection.commit()
-    cursor.close()
-    connection.close()
-
-def obtenertareas(UserId): 
-    connection = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="taskmanager",
-        port=3306,
-        cursorclass=pymysql.cursors.DictCursor
-    )
-
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM Tasks WHERE user_Id = %s", (UserId,))
-            tareas = cursor.fetchall()
-        return tareas
-    finally:
-        connection.close()
+#     connection.commit()
+#     cursor.close()
+#     connection.close()
 
 @app.route('/', methods=['GET', 'POST'])
 def Login():
@@ -86,7 +65,6 @@ def dashboard():
         return redirect(url_for('Login'))
     
 @app.route('/task', methods=['POST'])
-
 def createTask():
     if 'IdUser' not in session:
         return jsonify({'error': 'Usuario no autenticado'}), 401
@@ -123,7 +101,7 @@ def createTask():
                     datos.get('prioridad'), 
                     datos.get('categoria'), 
                     datos.get('fecha'), 
-                    'En Proceso'
+                    'Pendiente'
                 ))
                 
                 connection.commit()
@@ -147,3 +125,27 @@ def createTask():
             'error': 'Error en el servidor',
             'mensaje': str(e)
         }), 500
+
+@app.route('/getTasks', methods=['GET'])
+def getTasks():
+    if 'IdUser' not in session:
+        return jsonify({'error': 'Usuario no autenticado'}), 401
+    
+    UserId = session['IdUser']
+    
+    connection = pymysql.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="taskmanager",
+        port=3306,
+        cursorclass=pymysql.cursors.DictCursor
+    )
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM Tasks WHERE user_Id = %s", (UserId))
+            tareas = cursor.fetchall()
+        return jsonify(tareas)
+    finally:
+        connection.close()
