@@ -1,3 +1,5 @@
+let taskData = []
+
 function ShowHideCreateTask() {
     var container = document.getElementsByClassName("create-Task-Container")[0];
 
@@ -77,12 +79,12 @@ async function LoadTasks() {
         if (!respuesta.ok) {
             throw new Error('La respuesta de la red no fue correcta');
         }
-
-        const tasks = await respuesta.json();
-
+        
+        taskData = await respuesta.json();
+        
         let parentDiv
 
-        tasks.forEach(task => {
+        taskData.forEach(task => {
 
             if (task.status === 'Pendiente') {
                 parentDiv = document.getElementById('column-ToDo');
@@ -96,12 +98,14 @@ async function LoadTasks() {
             taskDiv.className = 'task-card';
 
             // Crear los elementos de la tarea
+            let taskId = document.createElement('p');
             let taskTitle = document.createElement('div');
             let taskDescription = document.createElement('div');
             let taskDate = document.createElement('div');
             let taskPriority = document.createElement('span');
 
             // Asignar clases a los elementos
+            taskId.className = 'task-id';
             taskTitle.className = 'task-title';
             taskDescription.className = 'task-description';
             taskDate.className = 'task-date';
@@ -114,12 +118,14 @@ async function LoadTasks() {
             taskPriority.className = priorityClasses[task.priority] || 'task-priority default';
 
             // Asignar contenido a los elementos
+            taskId.textContent = task.task_Id;
             taskTitle.textContent = task.task_name;
             taskDescription.textContent = task.description;
             taskDate.textContent = task.expiration_date.split('00:00:00')[0].trim();
             taskPriority.textContent = task.priority;
 
             // Agregar los elementos al taskDiv
+            taskDiv.appendChild(taskId);
             taskDiv.appendChild(taskTitle);
             taskDiv.appendChild(taskDescription);
             taskDiv.appendChild(taskDate);

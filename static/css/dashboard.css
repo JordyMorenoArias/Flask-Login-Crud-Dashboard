@@ -238,3 +238,7 @@ select.task-priority {
 .save-task:hover {
     background-color: #0056b3;
 }
+
+.task-id{
+    visibility: hidden;
+}

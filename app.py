@@ -146,7 +146,7 @@ def updateTask():
     )
 
     try: 
-        query = "UPDATE tasks SET task_name = %s, description = %s, priority = %s, category = %s, expiration_date = %s, status = %s WHERE User_Id = %s"
+        query = "UPDATE tasks SET task_name = %s, description = %s, priority = %s, category = %s, expiration_date = %s, status = %s WHERE task_Id = %s AND User_Id = %s"
         
         with connection.cursor as cursor:
             cursor.execute(query, (
@@ -156,8 +156,10 @@ def updateTask():
                     datos.get('categoria'), 
                     datos.get('fecha'), 
                     datos.get('status'),
+                    datos.get('taskId'),
                     UserId
-                ))
+               ))
+            
             connection.commit()
 
             return jsonify({'mensaje' : 'Tarea actualizada exitosamente'}), 200
