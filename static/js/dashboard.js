@@ -30,7 +30,7 @@ function CreateTask() {
         fecha: document.querySelector(".txt-task-date").value,
     }
 
-    fetch('/task', {
+    fetch('/insert-Task', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ function limpiarFormulario() {
 document.addEventListener('DOMContentLoaded', LoadTasks);
 async function LoadTasks() {
     try {
-        const respuesta = await fetch('/getTasks', {
+        const respuesta = await fetch('/get-tasks', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

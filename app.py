@@ -64,7 +64,7 @@ def dashboard():
     else:
         return redirect(url_for('Login'))
     
-@app.route('/task', methods=['POST'])
+@app.route('/insert-Task', methods=['POST'])
 def createTask():
     if 'IdUser' not in session:
         return jsonify({'error': 'Usuario no autenticado'}), 401
@@ -91,9 +91,9 @@ def createTask():
 
         try:
             with connection.cursor() as cursor:
+
                 query = "INSERT INTO Tasks (user_Id, task_name, description, priority, category, expiration_date, status) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                print(UserId)
-                print(datos)
+
                 cursor.execute(query, (
                     UserId, 
                     datos.get('titulo'), 
@@ -126,7 +126,56 @@ def createTask():
             'mensaje': str(e)
         }), 500
 
-@app.route('/getTasks', methods=['GET'])
+@app.route('/update-task', methods=['PUT'])
+def updateTask():
+    if 'IdUser' not in session:
+        return jsonify({'error' : 'Usuario no autenticado'}), 401
+    
+    datos = request.get_json()
+    UserId = session['IdUser']
+
+    if not datos:
+        return jsonify({'error' : 'No se recibieron datos'}), 400
+    
+    connection = pymysql.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="taskmanager",
+        port=3306
+    )
+
+    try: 
+        query = "UPDATE tasks SET task_name = %s, description = %s, priority = %s, category = %s, expiration_date = %s, status = %s WHERE User_Id = %s"
+        
+        with connection.cursor as cursor:
+            cursor.execute(query, (
+                    datos.get('titulo'), 
+                    datos.get('descripcion'), 
+                    datos.get('prioridad'), 
+                    datos.get('categoria'), 
+                    datos.get('fecha'), 
+                    datos.get('status'),
+                    UserId
+                ))
+            connection.commit()
+
+            return jsonify({'mensaje' : 'Tarea actualizada exitosamente'}), 200
+            
+    except Exception as e:
+        connection.rollback()
+        return jsonify({
+            'error': 'Error al actualizar la tarea',
+            'mensaje': str(e)
+        }), 500
+
+    finally:
+        connection.close()
+        
+
+
+
+@app.route('/get-tasks', methods=['GET'])
 def getTasks():
     if 'IdUser' not in session:
         return jsonify({'error': 'Usuario no autenticado'}), 401
