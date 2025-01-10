@@ -38,7 +38,7 @@
 
                 </div>
 
-                <div id="column-completed" class="task-column">
+                <div id="column-Done" class="task-column">
                     <div class="column-header">Completado</div>
 
                 </div>
@@ -53,26 +53,60 @@
                     <h2>Crear Nueva Tarea</h2>
                 </div>
                 <div class="task-body">
-                    <input class="txt-task-title txt-task" type="text" placeholder="Título de la tarea">
-                    <select class="txt-task-category txt-task">
+                    <input class="create-task-title txt-task" type="text" placeholder="Título de la tarea">
+                    <select class="create-task-category txt-task">
                         <option value="Personal">Personal</option>
                         <option value="Estudios">Estudios</option>
                         <option value="Trabajo">Trabajo</option>
                         <option value="Otro">Otro</option>
                     </select>
-                    <textarea class="txt-task-description txt-task" placeholder="Descripción de la tarea"></textarea>
-                    <input class="txt-task-date txt-task" type="date">
-                    <select class="txt-task-priority txt-task">
+                    <textarea class="create-task-description txt-task" placeholder="Descripción de la tarea"></textarea>
+                    <input class="create-task-date txt-task" type="date">
+                    <select class="create-task-priority txt-task">
                         <option value="Baja">Baja</option>
                         <option value="Media">Media</option>
                         <option value="Alta">Alta</option>
                     </select>
                 </div>
                 <div class="task-footer">
-                    <button class="save-task">Guardar</button>
+                    <button class="btn-task btn-create-task">Guardar</button>
                 </div>
             </div>
         </div>
+        <!-- Update Task Modal -->
+        <div class="update-Task-Container" style="visibility: hidden;" onclick="HideOnBackgroundClick(event)">
+            <div class="update-task">
+                <div class="task-header">
+                    <h2>Actualizar Tarea</h2>
+                </div>
+                <div class="task-body">
+                    <input class="update-task-title txt-task" type="text" placeholder="Título de la tarea">
+                    <select class="update-task-category txt-task">
+                        <option value="Personal">Personal</option>
+                        <option value="Estudios">Estudios</option>
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                    <textarea class="update-task-description txt-task" placeholder="Descripción de la tarea"></textarea>
+                    <input class="update-task-date txt-task" type="date">
+                    <select class="update-task-priority txt-task">
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                    <select class="update-task-status txt-task">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En Proceso">En Proceso</option>
+                        <option value="Completada">Completada</option>
+                    </select>
+                </div>
+                <div class="task-footer">
+                    <button class="btn-task btn-update-task">Actualizar</button>
+                    <button class="btn-task btn-delte-task">Eliminar</button>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="../static/js/dashboard.js"></script>
 </body>

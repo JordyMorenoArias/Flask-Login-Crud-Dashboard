@@ -96,11 +96,11 @@ def createTask():
 
                 cursor.execute(query, (
                     UserId, 
-                    datos.get('titulo'), 
-                    datos.get('descripcion'), 
-                    datos.get('prioridad'), 
-                    datos.get('categoria'), 
-                    datos.get('fecha'), 
+                    datos.get('task_name'), 
+                    datos.get('description'), 
+                    datos.get('priority'), 
+                    datos.get('category'), 
+                    datos.get('expiration_date'), 
                     'Pendiente'
                 ))
                 
@@ -146,17 +146,21 @@ def updateTask():
     )
 
     try: 
-        query = "UPDATE tasks SET task_name = %s, description = %s, priority = %s, category = %s, expiration_date = %s, status = %s WHERE task_Id = %s AND User_Id = %s"
         
-        with connection.cursor as cursor:
+        print(datos);
+
+        with connection.cursor() as cursor:
+
+            query = "UPDATE tasks SET task_name = %s, description = %s, priority = %s, category = %s, expiration_date = %s, status = %s WHERE task_Id = %s AND User_Id = %s"
+        
             cursor.execute(query, (
-                    datos.get('titulo'), 
-                    datos.get('descripcion'), 
-                    datos.get('prioridad'), 
-                    datos.get('categoria'), 
-                    datos.get('fecha'), 
+                    datos.get('task_name'), 
+                    datos.get('description'), 
+                    datos.get('priority'), 
+                    datos.get('category'), 
+                    datos.get('expiration_date'), 
                     datos.get('status'),
-                    datos.get('taskId'),
+                    datos.get('task_Id'),
                     UserId
                ))
             
@@ -174,9 +178,6 @@ def updateTask():
     finally:
         connection.close()
         
-
-
-
 @app.route('/get-tasks', methods=['GET'])
 def getTasks():
     if 'IdUser' not in session:
