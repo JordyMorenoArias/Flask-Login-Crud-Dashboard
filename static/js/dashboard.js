@@ -9,7 +9,7 @@ document.querySelector(".btn-create-task").addEventListener("click", CreateTask)
 
 document.querySelector(".btn-update-task").addEventListener("click", UpdateTask);
 
-// document.querySelector(".btn-delete-task").addEventListener("click", DeleteTask);
+document.querySelector(".btn-delete-task").addEventListener("click", DeleteTask);
 
 
 // Función para mostrar u ocultar el formulario de creación de tareas.
@@ -182,7 +182,7 @@ function cleanTasks() {
 
 // Limpia los formularios de creación y actualizacion de tareas y los oculta dependiendo de cual este abierto.
 function clearForms() {
-    if(document.querySelector('.create-Task-Container').style.visibility == 'visible'){
+    if(document.querySelector('.create-Task-Container').style.visibility === 'visible'){
 
         document.querySelector('.create-task-title').value = '';
         document.querySelector('.create-task-category').value = 'personal';
@@ -192,7 +192,7 @@ function clearForms() {
     
         document.querySelector('.create-Task-Container').style.visibility = 'hidden';
     }
-    else if(document.querySelector('.update-Task-Container').style.visibility == 'visible'){
+    else if(document.querySelector('.update-Task-Container').style.visibility === 'visible'){
 
         document.querySelector('.update-task-title').value = '';
         document.querySelector('.update-task-category').value = 'personal';
@@ -217,7 +217,7 @@ function CreateTask() {
     };
 
     // Envía los datos de la nueva tarea al servidor.
-    fetch('/insert-Task', {
+    fetch('/create-Task', {
         method: 'POST', // Método HTTP utilizado para crear un nuevo recurso.
         headers: {
             'Content-Type': 'application/json' // Especifica que los datos se envían en formato JSON.
@@ -285,4 +285,35 @@ function UpdateTask() {
             console.error('Error:', error); // Imprime el error en la consola.
         });
 }
+
+// Función para eliminar una tarea seleccionada mediante una solicitud DELETE al servidor.
+function DeleteTask() {
+    // Envía una solicitud DELETE a la ruta '/delete-task' del servidor.
+    fetch('/delete-task', {
+        method: 'DELETE', // Especifica el método HTTP DELETE.
+        headers: {
+            'Content-Type': 'application/json' // Indica que el cuerpo de la solicitud será en formato JSON.
+        },
+        body: JSON.stringify(selectedTask) // Convierte la tarea seleccionada (selectedTask) a formato JSON y la envía como cuerpo de la solicitud.
+    })
+    .then(respuesta => {
+        // Verifica si la respuesta del servidor no es correcta (código de estado HTTP fuera de la categoría 200).
+        if (!respuesta.ok) {
+            throw new Error('La respuesta de la red no fue correcta'); // Lanza un error con un mensaje específico.
+            return respuesta.json(); // (Nota: este retorno no se ejecutará debido al lanzamiento del error).
+        }
+    })
+    .then(datos => {
+        // Acciones a realizar si la solicitud DELETE fue exitosa y se obtuvieron datos del servidor.
+        clearForms(); // Limpia los campos del formulario.
+        cleanTasks(); // Limpia la lista de tareas actuales en la interfaz.
+        LoadTasks(); // Recarga la lista de tareas para reflejar los cambios.
+    })
+    .catch(error => {
+        // Manejo de errores en caso de que ocurra un problema en la solicitud o el servidor.
+        console.error('Error:', error); // Imprime el error en la consola para diagnóstico.
+    });
+}
+
+
 

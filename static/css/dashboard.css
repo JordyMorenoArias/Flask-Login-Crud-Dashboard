@@ -33,6 +33,10 @@ body {
     border-radius: 5px;
 }
 
+.dashboard-item{
+    background: #34495e;
+}
+
 .menu-item:hover {
     background: #34495e;
 }
