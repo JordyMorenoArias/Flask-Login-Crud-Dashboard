@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', LoadTasks);
 
 // Asocia el evento de guardar tarea al botón correspondiente.
 document.querySelector(".btn-create-task").addEventListener("click", CreateTask);
-
+// Asocia el evento de actualizar tarea al botón correspondiente.
 document.querySelector(".btn-update-task").addEventListener("click", UpdateTask);
-
+// Asocia el evento de eliminar tarea al botón correspondiente.
 document.querySelector(".btn-delete-task").addEventListener("click", DeleteTask);
 
 
@@ -204,116 +204,116 @@ function clearForms() {
     }
 }
 
-//  Función para crear una nueva tarea.
-//  Recopila los datos de la tarea desde el formulario de creación y los envía al servidor mediante una solicitud HTTP POST.
-function CreateTask() {
-    // Recopila los datos de la nueva tarea desde los campos del formulario.
-    const dataTask = {
-        task_name: document.querySelector(".create-task-title").value, // Nombre de la nueva tarea.
-        category: document.querySelector(".create-task-category").value, // Categoría de la nueva tarea.
-        description: document.querySelector(".create-task-description").value, // Descripción de la nueva tarea.
-        priority: document.querySelector(".create-task-priority").value, // Prioridad de la nueva tarea.
-        expiration_date: document.querySelector(".create-task-date").value // Fecha de vencimiento de la nueva tarea.
-    };
+// Función asíncrona para crear una nueva tarea.
+// Recopila los datos de la tarea desde el formulario de creación y los envía al servidor mediante una solicitud HTTP POST.
+async function CreateTask() {
+    try {
+        // Recopila los datos de la nueva tarea desde los campos del formulario.
+        const dataTask = {
+            task_name: document.querySelector(".create-task-title").value, // Nombre de la nueva tarea.
+            category: document.querySelector(".create-task-category").value, // Categoría de la nueva tarea.
+            description: document.querySelector(".create-task-description").value, // Descripción de la nueva tarea.
+            priority: document.querySelector(".create-task-priority").value, // Prioridad de la nueva tarea.
+            expiration_date: document.querySelector(".create-task-date").value // Fecha de vencimiento de la nueva tarea.
+        };
 
-    // Envía los datos de la nueva tarea al servidor.
-    fetch('/create-Task', {
-        method: 'POST', // Método HTTP utilizado para crear un nuevo recurso.
-        headers: {
-            'Content-Type': 'application/json' // Especifica que los datos se envían en formato JSON.
-        },
-        body: JSON.stringify(dataTask) // Convierte el objeto JavaScript a una cadena JSON para enviarlo al servidor.
-    })
-        .then(respuesta => {
-            // Comprueba si la respuesta HTTP no es exitosa (código de estado diferente de 2xx).
-            if (!respuesta.ok) {
-                throw new Error('La respuesta de la red no fue correcta'); // Lanza un error si la respuesta es incorrecta.
-            }
-            return respuesta.json(); // Convierte la respuesta JSON a un objeto JavaScript.
-        })
-        .then(datos => {
-            // Acciones a realizar si la solicitud fue exitosa.
-            console.log('Éxito:', datos); // Imprime un mensaje en la consola indicando el éxito de la operación.
-            clearForms(); // Limpia los campos del formulario de creación.
-            cleanTasks(); // Limpia la lista de tareas actuales.
-            LoadTasks(); // Carga nuevamente las tareas actualizadas desde el servidor.
-        })
-        .catch(error => {
-            // Manejo de errores en caso de que ocurra un problema en la solicitud o el servidor.
-            console.error('Error:', error); // Imprime el error en la consola.
+        // Envía los datos de la nueva tarea al servidor.
+        const response = await fetch('/create-Task', {
+            method: 'POST', // Método HTTP utilizado para crear un nuevo recurso.
+            headers: {
+                'Content-Type': 'application/json' // Especifica que los datos se envían en formato JSON.
+            },
+            body: JSON.stringify(dataTask) // Convierte el objeto JavaScript a una cadena JSON para enviarlo al servidor.
         });
-}
 
-
-// Función para actualizar una tarea existente en el servidor.
-// Recoge los datos de los campos del formulario, los envía al servidor mediante una solicitud HTTP PUT, y realiza acciones posteriores según la respuesta del servidor.
-function UpdateTask() {
-    // Recopila los datos de la tarea desde los campos del formulario.
-    const dataTask = {
-        task_Id: selectedTask.task_Id, // ID de la tarea seleccionada previamente (global).
-        task_name: document.querySelector(".update-task-title").value, // Nombre de la tarea.
-        category: document.querySelector(".update-task-category").value, // Categoría de la tarea.
-        description: document.querySelector(".update-task-description").value, // Descripción de la tarea.
-        priority: document.querySelector(".update-task-priority").value, // Prioridad de la tarea.
-        expiration_date: document.querySelector(".update-task-date").value, // Fecha de vencimiento de la tarea.
-        status: document.querySelector(".update-task-status").value // Estado de la tarea.
-    };
-
-    // Envía una solicitud HTTP PUT al servidor para actualizar la tarea.
-    fetch('/update-task', {
-        method: 'PUT', // Método HTTP utilizado para actualizar recursos.
-        headers: {
-            'Content-Type': 'application/json' // Especifica que los datos se envían en formato JSON.
-        },
-        body: JSON.stringify(dataTask) // Convierte el objeto JavaScript a una cadena JSON para enviarlo al servidor.
-    })
-        .then(respuesta => {
-            // Comprueba si la respuesta HTTP no es exitosa (código de estado diferente de 2xx).
-            if (!respuesta.ok) {
-                throw new Error('La respuesta de la red no fue correcta'); // Lanza un error si la respuesta es incorrecta.
-            }
-            return respuesta.json(); // Convierte la respuesta JSON a un objeto JavaScript.
-        })
-        .then(datos => {
-            // Acciones a realizar si la solicitud fue exitosa.
-            clearForms(); // Limpia los campos del formulario.
-            cleanTasks(); // Limpia la lista de tareas actuales.
-            LoadTasks(); // Carga nuevamente las tareas actualizadas.
-        })
-        .catch(error => {
-            // Manejo de errores en caso de que ocurra un problema en la solicitud o el servidor.
-            console.error('Error:', error); // Imprime el error en la consola.
-        });
-}
-
-// Función para eliminar una tarea seleccionada mediante una solicitud DELETE al servidor.
-function DeleteTask() {
-    // Envía una solicitud DELETE a la ruta '/delete-task' del servidor.
-    fetch('/delete-task', {
-        method: 'DELETE', // Especifica el método HTTP DELETE.
-        headers: {
-            'Content-Type': 'application/json' // Indica que el cuerpo de la solicitud será en formato JSON.
-        },
-        body: JSON.stringify(selectedTask) // Convierte la tarea seleccionada (selectedTask) a formato JSON y la envía como cuerpo de la solicitud.
-    })
-    .then(respuesta => {
-        // Verifica si la respuesta del servidor no es correcta (código de estado HTTP fuera de la categoría 200).
-        if (!respuesta.ok) {
-            throw new Error('La respuesta de la red no fue correcta'); // Lanza un error con un mensaje específico.
-            return respuesta.json(); // (Nota: este retorno no se ejecutará debido al lanzamiento del error).
+        // Comprueba si la respuesta HTTP no es exitosa (código de estado diferente de 2xx).
+        if (!response.ok) {
+            throw new Error('La respuesta de la red no fue correcta');
         }
-    })
-    .then(datos => {
-        // Acciones a realizar si la solicitud DELETE fue exitosa y se obtuvieron datos del servidor.
-        clearForms(); // Limpia los campos del formulario.
-        cleanTasks(); // Limpia la lista de tareas actuales en la interfaz.
-        LoadTasks(); // Recarga la lista de tareas para reflejar los cambios.
-    })
-    .catch(error => {
+
+        // Convierte la respuesta JSON a un objeto JavaScript.
+        const data = await response.json();
+
+        // Acciones a realizar si la solicitud fue exitosa.
+        console.log('Éxito:', data);
+        clearForms(); // Limpia los campos del formulario de creación.
+        cleanTasks(); // Limpia la lista de tareas actuales.
+        LoadTasks(); // Carga nuevamente las tareas actualizadas desde el servidor.
+
+    } catch (error) {
         // Manejo de errores en caso de que ocurra un problema en la solicitud o el servidor.
-        console.error('Error:', error); // Imprime el error en la consola para diagnóstico.
-    });
+        console.error('Error:', error); // Imprime el error en la consola.
+    }
 }
 
+// Función asíncrona para actualizar una tarea existente en el servidor.
+// Recoge los datos de los campos del formulario, los envía al servidor mediante una solicitud HTTP PUT, y realiza acciones posteriores según la respuesta del servidor.
+async function UpdateTask() {
+    try {
+        // Recopila los datos de la tarea desde los campos del formulario.
+        const dataTask = {
+            task_Id: selectedTask.task_Id, // ID de la tarea seleccionada previamente (global).
+            task_name: document.querySelector(".update-task-title").value, // Nombre de la tarea.
+            category: document.querySelector(".update-task-category").value, // Categoría de la tarea.
+            description: document.querySelector(".update-task-description").value, // Descripción de la tarea.
+            priority: document.querySelector(".update-task-priority").value, // Prioridad de la tarea.
+            expiration_date: document.querySelector(".update-task-date").value, // Fecha de vencimiento de la tarea.
+            status: document.querySelector(".update-task-status").value // Estado de la tarea.
+        };
 
+        // Envía una solicitud HTTP PUT al servidor para actualizar la tarea.
+        const response = await fetch('/update-task', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataTask)
+        });
 
+        // Comprueba si la respuesta HTTP no es exitosa.
+        if (!response.ok) {
+            throw new Error('La respuesta de la red no fue correcta');
+        }
+
+        // Procesa la respuesta JSON.
+        const data = await response.json();
+
+        // Acciones posteriores al éxito.
+        clearForms(); // Limpia los campos del formulario.
+        cleanTasks(); // Limpia la lista de tareas actuales.
+        LoadTasks(); // Carga nuevamente las tareas actualizadas.
+    } catch (error) {
+        // Manejo de errores.
+        console.error('Error:', error);
+    }
+}
+
+// Función asíncrona para eliminar una tarea seleccionada mediante una solicitud DELETE al servidor.
+async function DeleteTask() {
+    try {
+        // Envía una solicitud DELETE al servidor.
+        const response = await fetch('/delete-task', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedTask) // Convierte la tarea seleccionada a JSON.
+        });
+
+        // Comprueba si la respuesta HTTP no es exitosa.
+        if (!response.ok) {
+            throw new Error('La respuesta de la red no fue correcta');
+        }
+
+        // Procesa la respuesta JSON (si aplica).
+        const data = await response.json();
+
+        // Acciones posteriores al éxito.
+        clearForms(); // Limpia los campos del formulario.
+        cleanTasks(); // Limpia la lista de tareas actuales.
+        LoadTasks(); // Recarga la lista de tareas.
+    } catch (error) {
+        // Manejo de errores.
+        console.error('Error:', error);
+    }
+}

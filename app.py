@@ -1,7 +1,7 @@
 from datetime import date  # Para manejar y trabajar con fechas.
-from flask import Flask, jsonify, render_template, request, redirect, session, url_for  # Framework Flask y sus módulos para manejar rutas, respuestas y sesiones.
-import pymysql  # Cliente para interactuar con la base de datos MySQL.
-import pymysql.cursors  # Cursores de PyMySQL para manejar consultas a la base de datos.
+from flask import Flask, jsonify, render_template, request, redirect, session, url_for
+import pymysql
+import pymysql.cursors
 import hashlib  # Biblioteca para aplicar algoritmos de hash como SHA-256.
 
 # Inicialización de la aplicación Flask
@@ -15,7 +15,7 @@ def HashearPassword(password):
 
 # Ruta para registrar un nuevo usuario.
 @app.route('/record-user')
-def CreateUser():
+def RecordUser():
     try:
         datos = request.get_json  # Obtener datos JSON enviados en la solicitud.
         # Conexión a la base de datos MySQL.
@@ -29,7 +29,7 @@ def CreateUser():
             cursor.execute(query, {
                 datos.get('name'),
                 datos.get('email'),
-                datos.get('password')
+                HashearPassword(datos.get('password'))
             })
 
             connection.commit()  # Confirmar los cambios en la base de datos.
@@ -215,7 +215,6 @@ def getTasks():
     # Conexión a la base de datos MySQL con cursores tipo diccionario.
     connection = pymysql.connect(host="localhost", user="root", password="", database="taskmanager", port=3306, cursorclass=pymysql.cursors.DictCursor
     )
-
     try:
         with connection.cursor() as cursor:
             # Consulta para obtener todas las tareas del usuario.
